@@ -22,4 +22,18 @@ if (getenv('JAWSDB_URL') !== false){
     $hostname = 'localhost';
 }
 
+try {
+    $pdo = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e)
+{
+    echo "connection failed: " .$e->getMessage();
+}
 
+
+$query = $pdo->prepare("INSERT INTO users (nom,age) VALUES (?,?)");
+$query->execute(['Jonathan', 30]);
+
+$query = $pdo->prepare("INSERT INTO users (nom,age) VALUES (?,?)");
+$query->execute(['Celine', 27]);
